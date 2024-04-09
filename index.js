@@ -1,62 +1,63 @@
-function getComputerChoice() {
-  let availableChoices = ["rock", "paper", "scissors"];
-  let compChoice = Math.floor(Math.random() * availableChoices.length);
+let playerpts = 0
+let computerpts = 0
 
-  console.log(availableChoices[compChoice]);
-  return availableChoices[compChoice];
+
+
+function getComputerselection() {
+  let availableselections = ["rock", "paper", "scissors"];
+  let compSelection = Math.floor(Math.random() * availableselections.length);
+
+  console.log(availableselections[compSelection]);
+  return availableselections[compSelection];
 }
 
-console.log("managed to enter js file");
+function updateCurrentPoints(playerpts, computerpts) {
+  const playerPoints = document.querySelector('.playerPoints')
+  const ComputerPoints = document.querySelector('.computerPoints')
+  const pointsTable = document.querySelector('.pointsTable')
 
-function playRound(playerSelection, computerSelection) {
-  console.log("user input is" + playerSelection);
-  if (playerSelection == "rock") {
-    if (computerSelection == "paper") {
-      return 0;
-    } else if (computerSelection == "rock") {
-      return 1;
-    } else if (computerSelection == "scissors") {
-      return 2;
-    }
-  } else if (playerSelection == "paper") {
-    if (computerSelection == "paper") {
-      return 1;
-    } else if (computerSelection == "rock") {
-      return 2;
-    } else if (computerSelection == "scissors") {
-      return 0;
-    }
-  } else if (playerSelection == "scissors") {
-    if (computerSelection == "paper") {
-      return 2;
-    } else if (computerSelection == "rock") {
-      return 0;
-    } else if (computerSelection == "scissors") {
-      return 1;
-    }
-  }
+  playerPoints.textContent = "player points: " + playerpts;
+  ComputerPoints.textContent = "comptuer points: " + computerpts;
 
-  return 1;
 }
 
-function playGame() {
-  let computerPoints = 0;
-  let userPoints = 0;
-  for (let round = 0; round < 5; round++) {
-    let scoreStatus = playRound(prompt("round " + round + " , choose rock, paper or scissors").toLowerCase(), getComputerChoice());
-    if (scoreStatus == 0) {
-      console.log("You lost!");
-      computerPoints++;
-    } else if (scoreStatus == 2) {
-      console.log("You won!");
-      userPoints++;
-    } else {
-      console.log("It was a draw");
-    }
-    console.log('Your points: ' + userPoints)
-    console.log('Computer points: ' + computerPoints)
-  }
-  return 1
-}
 
-playGame()
+let buttons = document.querySelectorAll('button')
+let gameBodyDiv = document.querySelector('.gameBodyDiv')
+let gameResult;
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playerSelection = button.id
+
+    let computerSelection = getComputerselection()
+    let gameResult = document.createElement('h3')
+
+    const playerChoiceP = document.createElement('p')
+    const computerChoiceP = document.createElement('p')
+    playerChoiceP.textContent = "you choose: " + playerSelection
+    gameBodyDiv.appendChild(playerChoiceP)
+    computerChoiceP.textContent = "computer choose: " + computerSelection
+    gameBodyDiv.appendChild(computerChoiceP)
+    
+
+
+
+    if ((playerSelection === 'rock' && computerSelection === 'paper') || 
+    (playerSelection === 'paper' && computerSelection === 'scissors') ||
+    (playerSelection === 'scissors' && computerSelection === 'rock')){
+      gameResult.textContent = 'You Lost!'
+      computerpts ++
+    }
+    else if (playerSelection === computerSelection) {
+      gameResult.textContent = "it's a draw!"
+    }
+    else {
+      gameResult.textContent = "you won!"
+      playerpts ++
+    }
+    updateCurrentPoints(playerpts, computerpts)
+    gameBodyDiv.appendChild(gameResult)
+  })
+})
+

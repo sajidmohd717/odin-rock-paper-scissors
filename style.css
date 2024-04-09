@@ -1,0 +1,9 @@
+.pointsTable {
+    background-color: aqua;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
