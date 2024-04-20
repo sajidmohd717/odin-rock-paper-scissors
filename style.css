@@ -1,3 +1,11 @@
+.introduction {
+    text-align: center;
+}
+
+hr {
+    margin: 50px 0px;
+}
+
 .pointsTable {
     background-color: aqua;
 }
